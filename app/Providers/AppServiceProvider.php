@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\PlanObserver;
+use App\Models\Plan;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
        // Usar boostrap na pagiação
+        Plan::observe(PlanObserver::class);
         Paginator::useBootstrap();
     }
 }
