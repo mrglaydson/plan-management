@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{PlanController, DetailPlanController};
+use App\Http\Controllers\Admin\ACL\{ProfileController};
 
 Route::get('/', function () {
     return view('welcome');
@@ -9,6 +10,12 @@ Route::get('/', function () {
 
 Route::prefix('admin')
     ->group(function() {
+
+        /**
+        * Detalhes
+        */
+        Route::any('profiles/search', [ProfileController::class, 'search'])->name('profiles.search');
+        Route::resource('profiles', ProfileController::class);
 
         /**
         * Detalhes

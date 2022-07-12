@@ -229,7 +229,12 @@ return [
             'text' => 'Planos',
             'url' => 'admin/plans',
             'icon' => 'fas fa-list-ul'
-        ]
+        ],
+        [
+            'text' => 'Perfis',
+            'url' => 'admin/profiles',
+            'icon' => 'fas fa-id-badge'
+        ],
     ],
     // 'menu' => [
     //     // Navbar items:
