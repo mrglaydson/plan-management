@@ -10,6 +10,11 @@ class Plan extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'url', 'description', 'price'];
+
+    public function details()
+    {
+        return $this->hasMany(DetailPlan::class);
+    }
     
     public function search($filter = null)
     {
@@ -19,7 +24,6 @@ class Plan extends Model
                     ->paginate();
 
         return $results;
-    
     }
 }
 

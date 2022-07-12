@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', "Detalhe do plano {$plan->name}")
 
 @section('content_header')
     <ol class="breadcrumb">
@@ -10,40 +10,37 @@
         <li class="breadcrumb-item active">
             <a href="{{ route('plans.index') }}">Planos</a>
         </li>
+
+        <li class="breadcrumb-item active">
+            <a href="{{ route('plans.show', $plan->url) }}">{{ $plan->name }}</a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            <a href="{{ route('details.plan.index', $plan->url) }}">Detalhes</a>
+        </li>
     </ol>
 
-    <h1>Planos <a href="{{ route('plans.create') }}"><i class="fas fa-plus-square"></i></a></h1>
+    <h1>Detalhes <a href="{{ route('details.plan.create', $plan->url) }}"><i class="fas fa-plus-square"></i></a></h1>
 @stop
 
 @section('content')
-    <p>Listagem dos planos</p>
+    <p>Listagem dos detalhes</p>
     <div class="card">
-        <div class="card-header">
-            <form action="{{ route('plans.search') }}" method="POST" class="form form-inline">
-                @csrf
-                <input type="text" name="filter" placeholder="Nome" class="form-control"
-                    value="{{ $plan->filters['filter'] ?? '' }}">
-                <button type="submit" class="btn btn-dark">Filtrar</button>
-            </form>
-        </div>
         <div class="card-body">
             <table class="table table-condensed">
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Preço</th>
-                        <th style="width: 250px;">Ações</th>
+                        <th style="width: 150px;">Ações</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($plans as $plan)
+                    @foreach ($details as $detail)
                         <tr>
-                            <td>{{ $plan->name }}</td>
-                            <td>R$ {{ number_format($plan->price, 2, ',', '.') }}</td>
+                            <td>{{ $detail->name }}</td>
                             <td>
-                                <a href="{{ route('details.plan.index', $plan->url) }}" class="btn btn-info">Detalhes</a>
-                                <a href="{{ route('plans.show', $plan->url) }}" class="btn btn-warning">Ver</a>
+                                <a href="{{ route('details.plan.edit', [$plan->url, $detail->id]) }}" class="btn btn-info">Editar</a>
                                 <a href="{{ route('plans.show', $plan->url) }}" class="btn btn-warning">Ver</a>
                             </td>
                         </tr>
@@ -53,9 +50,9 @@
         </div>
         <div class="card-footer">
             @if (isset($filters))
-                {!! $plans->appends($filters)->links() !!}
+                {!! $details->appends($filters)->links() !!}
             @else
-                {!! $plans->links() !!}
+                {!! $details->links() !!}
             @endif
         </div>
     </div>
