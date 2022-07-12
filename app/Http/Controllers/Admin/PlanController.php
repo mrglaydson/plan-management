@@ -63,11 +63,21 @@ class PlanController extends Controller
 
     public function destroy($url)
     {
-        $plan = $this->plan->where('url', $url)->first();
+        $plan = $this->plan
+                        ->with('details')
+                        ->where('url', $url)
+                        ->first();
 
         if (!$plan) {
             return redirect()->back();
-         }
+        }
+
+        if ($plan->details->count() > 0) {
+            return redirect()
+                    ->back()
+                    ->with('error', 'Existem Detalhes vinculados a esse plano, portanto, remova os detalhes antes de remover o plano');
+        }
+        
 
         $plan->delete();
 

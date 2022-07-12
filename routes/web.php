@@ -15,10 +15,12 @@ Route::prefix('admin')
         */
         Route::get('plans/{url}/details', [DetailPlanController::class, 'index'])->name('details.plan.index');
         Route::get('plans/{url}/details/create', [DetailPlanController::class, 'create'])->name('details.plan.create');
+        Route::get('plans/{url}/details/{detailId}', [DetailPlanController::class, 'show'])->name('details.plan.show');
         Route::get('plans/{url}/details/{detailId}/edit', [DetailPlanController::class, 'edit'])->name('details.plan.edit');
         
         Route::post('plans/{url}/details', [DetailPlanController::class, 'store'])->name('details.plan.store');
         Route::put('plans/{url}/details/{detailId}/edit', [DetailPlanController::class, 'update'])->name('details.plan.update');
+        Route::delete('plans/{url}/details/{detailId}', [DetailPlanController::class, 'destroy'])->name('details.plan.destroy');
 
         /**
         * Planos

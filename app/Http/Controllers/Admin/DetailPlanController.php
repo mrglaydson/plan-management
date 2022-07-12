@@ -28,6 +28,21 @@ class DetailPlanController extends Controller
         ]);
     }
 
+    public function show($urlPlan, $detailId)
+    {
+        $plan = $this->plan->where('url', $urlPlan)->first();
+        $detail = $this->detailPlan->find($detailId);
+
+        if (!$plan || !$detail) {
+            return redirect()->back();
+        }
+
+        return view('admin.pages.plans.details.show', [
+            'plan' => $plan,
+            'detail' => $detail,
+        ]);
+    }
+
     public function create($urlPlan)
     {
         if (!$plan = $this->plan->where('url', $urlPlan)->first()) {
@@ -69,6 +84,22 @@ class DetailPlanController extends Controller
             'plan' => $plan,
             'detail' => $detail,
         ]);
+    }
+
+    public function destroy($urlPlan, $detailId)
+    {
+        $plan = $this->plan->where('url', $urlPlan)->first();
+        $detail = $this->detailPlan->find($detailId);
+
+        if (!$plan || !$detail) {
+            return redirect()->back();
+        }
+
+        $detail->delete();
+        
+        return redirect()
+                    ->route('details.plan.index', $plan->url)
+                    ->with('message', 'Registro deletado com sucesso!');
     }
 
     public function store(StoreUpdateDetailPlan $request, $urlPlan)

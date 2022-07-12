@@ -7,7 +7,9 @@
 @stop
 
 @section('content')
-    <p>Detalhes do plano </p>
+
+    @include('admin.includes.alerts')
+
     <div class="card">
         <div class="card-body">
             <ul>
